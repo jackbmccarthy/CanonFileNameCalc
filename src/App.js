@@ -44,43 +44,72 @@ class App extends React.Component {
 
   render() {
     return (
-      <div style={{ backgroundColor: "red" }} >
-        <AppBar id="topbar" position="static" style={{ backgroundColor: "#BF1920", }}>
-          <Typography style={{ width: "100%", fontSize: "4vw", color: "#000000" }}>Canon imageRunner Advance File Name Calculator</Typography>
+      <div  >
+        <AppBar id="topbar" position="static" style={{ backgroundColor: "#5066CA", }}>
+          <Typography style={{ width: "100%", fontSize: "4vw", color: "white" }}>Canon imageRunner Advance File Name Calculator</Typography>
         </AppBar>
-        <List style={{ maxWidth: 400, width: "30%", float: "left", overflow: "auto", maxHeight: this.state.height }}>
-          <Paper key={this.state.customTextOptions.name}><ListItem   >
-            <ListItemText primaryTypographyProps={{ fontSize: 70 }} primary={this.state.customTextOptions.name} secondary={"Example: Any Text"}></ListItemText>
-            <ListSubheader>
-              <TextField style={{marginRight:30}} value={this.state.customText} onChange={(text) => {
-                this.setState({ customText: text.target.value })
-              }}></TextField>
-            </ListSubheader>
-            <ListItemSecondaryAction style={{zIndex:3}}><Button style={{ backgroundColor: "#BF1920",}} onClick={() => {
-              if (this.state.customText.length >= 1) {
-                var newExample = this.state.exampleText.concat(this.state.customText)
-                var newPaste = this.state.pasteText.concat("%<" + this.state.customText + ">")
-                console.log(newExample)
-                this.setState({ exampleText: newExample, pasteText: newPaste, customText: "" })
-              }
-            }}>
-              <Typography style={{color:"white"}}>Add</Typography></Button></ListItemSecondaryAction>
-          </ListItem></Paper>
+
+
+        <List style={{ maxWidth: 400, width: this.state.width * 0.3, float: "left", overflowY: "scroll", maxHeight: this.state.height, overflowX: "clip" }}>
+          <Paper key={this.state.customTextOptions.name}>
+            <ListItem style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}  >
+              <div>
+                <Typography style={{ fontSize: "3vw" }} >{this.state.customTextOptions.name}</Typography>
+
+
+
+                {
+                  // <ListItemText primaryTypographyProps={{ fontSize: "4vw" }} primary= secondary=></ListItemText>
+                }
+
+
+                <TextField style={{ marginRight: 30 }} value={this.state.customText} onChange={(text) => {
+                  this.setState({ customText: text.target.value })
+                }}></TextField>
+              </div>
+
+              <Button style={{ backgroundColor: "#5066CA", }} onClick={() => {
+                if (this.state.customText.length >= 1) {
+                  var newExample = this.state.exampleText.concat(this.state.customText)
+                  var newPaste = this.state.pasteText.concat("%<" + this.state.customText + ">")
+                  console.log(newExample)
+                  this.setState({ exampleText: newExample, pasteText: newPaste, customText: "" })
+                }
+              }}>
+                <Typography style={{ color: "white", fontSize: "2vw" }}>Add</Typography></Button>
+            </ListItem></Paper>
           {this.state.timeOptions.map((row) => {
             return (
-              <Paper key={row.name} style={{ margin: 3 }}><ListItem   >
-                <ListItemText primaryTypographyProps={{ fontSize: "5vw" }} primary={row.name} secondary={"Example:" + row.example}></ListItemText>
-                <ListItemSecondaryAction><Button style={{ backgroundColor: "#BF1920",}} onClick={() => {
-                  var newExample = this.state.exampleText.concat(row.example)
-                  var newPaste = this.state.pasteText.concat(row.value)
-                  console.log(newExample)
-                  this.setState({ exampleText: newExample, pasteText: newPaste })
-                }}><Typography style={{color:"white"}}>Add</Typography></Button></ListItemSecondaryAction>
-              </ListItem></Paper>
+              <Paper key={row.name} style={{ margin: 3, }}>
+                <ListItem style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", }}  >
+                  <Typography>
+                    <Typography style={{ fontSize: "3vw" }} >{row.name} </Typography>
+                    <Typography style={{ flexWrap: "wrap", fontSize: "2vw" }}>{"Example:" + row.example}</Typography>
+                  </Typography>
+
+
+                  {
+                    //<ListItemText primaryTypographyProps={{ fontSize: "5vw" }} primary= secondary={"Example:" + row.example}></ListItemText>
+                  }
+                  {
+                    // <ListItemSecondaryAction>
+                  }
+
+                  <Button style={{ backgroundColor: "#5066CA", }} onClick={() => {
+                    var newExample = this.state.exampleText.concat(row.example)
+                    var newPaste = this.state.pasteText.concat(row.value)
+                    console.log(newExample)
+                    this.setState({ exampleText: newExample, pasteText: newPaste })
+                  }}><Typography style={{ color: "white", fontSize: "2vw" }}>Add</Typography></Button>
+
+                  {
+                    //</ListItemSecondaryAction>
+                  }
+                </ListItem></Paper>
             )
           })}
         </List>
-        <div style={{ width: "70%", height: this.state.height, float: "left", alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+        <div style={{ width: "65%", height: this.state.height, float: "left", alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <div style={{ height: "30%", width: "90%", margin: 5, alignItems: "center", justifyContent: "center" }}>
             <Typography style={{ width: "100%", fontSize: "4vw" }} >Sample File Name:</Typography>
             <Paper style={{ height: "70%", width: "90%", overflow: "auto", }} >
@@ -93,7 +122,7 @@ class App extends React.Component {
             </Paper>
           </div>
           <div style={{ height: "30%", width: "90%", margin: 5 }}>
-            <Typography style={{ width: "100%", fontSize: "4vw" }}  >File Name Syntax:</Typography>
+            <Typography style={{ width: "100%", fontSize: "4vw" }}  >Paste into File Name:</Typography>
             <Paper style={{ height: "70%", width: "90%", justifyContent: "center", flexWrap: "wrap", overflow: "auto", }} >
               <Typography style={{ fontSize: "4vw", maxWidth: "100%", flexWrap: "wrap", wordBreak: "break-all", }} align="center">
                 {this.state.pasteText.map((item) => {
@@ -103,10 +132,10 @@ class App extends React.Component {
             </Paper>
           </div>
           <div>
-            <Button style={{ backgroundColor: "#BF1920", color: "white", margin: 10, marginTop: 30 }} onClick={() => {
+            <Button style={{ backgroundColor: "#5066CA", color: "white", margin: 10, marginTop: 30 }} onClick={() => {
               this.setState({ exampleText: [], pasteText: [] })
             }}>Clear</Button>
-            <Button style={{ backgroundColor: "#BF1920", color: "white", margin: 10, marginTop: 30 }} color="white" onClick={() => {
+            <Button style={{ backgroundColor: "#5066CA", color: "white", margin: 10, marginTop: 30 }} color="white" onClick={() => {
               var oldExample = this.state.exampleText
               oldExample.pop()
               var oldPaste = this.state.pasteText
